@@ -192,7 +192,7 @@ const BODMASPuzzle = () => {
     if (selectedCell) {
       setCellValues(prev => ({ ...prev, [selectedCell]: '' }));
     } else {
-      showWarning('Please select a cell first');
+      showErrorPopup('⚠️ Please select a cell first', 'error');
     }
   };
 
@@ -344,6 +344,8 @@ const BODMASPuzzle = () => {
     <div style={{
       fontFamily: "'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif",
       padding: window.innerWidth < 768 ? '10px 5px' : '15px 10px',
+      background: 'linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)',
+      minHeight: '100vh',
     }}>
       {/* Warning Message */}
       {warningMessage && (
@@ -382,9 +384,9 @@ const BODMASPuzzle = () => {
         <div style={{
           background: '#ffffff',
           borderRadius: '12px',
-          boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+          boxShadow: '0 8px 32px rgba(0,0,0,0.12)',
           overflow: 'hidden',
-          border: '1px solid #e9ecef',
+          border: '1px solid #dee2e6',
         }}>
           {/* Game Header */}
           <div style={{
@@ -432,7 +434,7 @@ const BODMASPuzzle = () => {
                 color: '#6c757d',
               }}>
                 <FaShare style={{ fontSize: '0.7rem' }} />
-                <span style={{ fontWeight: '500' }}>Challenge your friends</span>
+                <span style={{ fontWeight: '1000' }}>Challenge your friends</span>
                 <div style={{
                   display: 'flex',
                   gap: '4px',
