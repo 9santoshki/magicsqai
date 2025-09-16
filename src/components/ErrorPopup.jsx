@@ -51,7 +51,7 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error' }) => {
         display: 'flex',
         alignItems: 'center',
         gap: '12px',
-        fontSize: '0.9rem',
+        fontSize: '1.1rem',
         fontWeight: '600',
         lineHeight: '1.4',
       }}>

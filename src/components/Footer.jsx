@@ -16,9 +16,11 @@ const Footer = () => {
       }}>
         {/* Main Footer Content */}
         <div style={{
-          display: 'grid',
-          gridTemplateColumns: window.innerWidth < 768 ? '1fr' : 'repeat(2, 1fr)',
-          gap: '25px',
+          display: 'flex',
+          flexDirection: window.innerWidth < 768 ? 'column' : 'row',
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
+          gap: '40px',
           marginBottom: '20px',
         }}>
           {/* Logo and Description */}

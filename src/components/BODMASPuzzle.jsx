@@ -165,14 +165,13 @@ const BODMASPuzzle = () => {
   const handleCellChange = (e, cellId) => {
     const value = e.target.value;
     
-    // Immediately check for invalid characters
-    if (value !== '' && !/^[1-9]$/.test(value)) {
-      showErrorPopup('❌ Invalid Input: Please enter only single digits from 1 to 9', 'error');
-      // Prevent the invalid input
+    // Only allow single digits 1-9 or empty
+    if (value !== '' && (!/^[1-9]$/.test(value))) {
+      showErrorPopup('❌ Please enter only single digits from 1 to 9', 'error');
       e.target.value = cellValues[cellId] || '';
       return;
     }
-    
+
     if (value === '') {
       setCellValues(prev => ({ ...prev, [cellId]: value }));
     } else {
@@ -181,8 +180,11 @@ const BODMASPuzzle = () => {
         setCellValues(prev => ({ ...prev, [cellId]: value }));
       } else {
         showErrorPopup(`❌ Rule Violation: ${validation.error}`, 'error');
-        // Prevent the duplicate input
-        e.target.value = cellValues[cellId] || '';
+        // Prevent the duplicate input and revert to previous value
+        setTimeout(() => {
+          e.target.value = cellValues[cellId] || '';
+        }, 0);
+        return;
       }
     }
   };
@@ -310,11 +312,10 @@ const BODMASPuzzle = () => {
     }
 
     // If we reach here, all equations are correct
-    setResult(`🎉 Congratulations! Puzzle solved in ${formatTime(seconds)}!`);
-    setResultColor('#28a745');
-    setIsTimerRunning(false);
-    setIsPuzzleCompleted(true);
-    setShowShareButtons(true);
+        setResult('🎉 Congratulations! Puzzle solved correctly!\n\nDaily Challenge - Boost your Brainpower!\nReturn tomorrow for a new challenge!');
+        setResultColor('#28a745');
+        setShowShareButtons(true);
+        setIsPuzzleCompleted(true);
   };
 
   // Share functionality
@@ -395,6 +396,21 @@ const BODMASPuzzle = () => {
             color: '#495057',
             borderBottom: '1px solid #e9ecef',
           }}>
+            {/* BODMAS Challenge Heading */}
+            <div style={{
+              textAlign: 'center',
+              marginBottom: '12px',
+            }}>
+              <h2 style={{
+                margin: '0',
+                fontSize: window.innerWidth < 768 ? '1.5rem' : '1.8rem',
+                fontWeight: '700',
+                color: '#2c3e50',
+                textShadow: '0 1px 2px rgba(0,0,0,0.1)',
+              }}>
+                BODMAS Challenge
+              </h2>
+            </div>
             {/* Header Layout - Timer, Difficulty, and Challenge Friends */}
             <div style={{
               display: 'flex',
@@ -793,7 +809,7 @@ const BODMASPuzzle = () => {
                     padding: window.innerWidth < 768 ? '6px 3px' : '8px 4px',
                     fontSize: window.innerWidth < 768 ? '0.7rem' : '0.8rem',
                     fontWeight: '600',
-                    background: 'linear-gradient(135deg, #6c757d 0%, #495057 100%)',
+                    background: 'linear-gradient(135deg, #ffc107 0%, #e0a800 100%)',
                     color: 'white',
                     border: 'none',
                     borderRadius: '6px',
@@ -808,11 +824,11 @@ const BODMASPuzzle = () => {
                     boxShadow: '0 2px 6px rgba(108, 117, 125, 0.2)',
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #5a6268 0%, #343a40 100%)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #e0a800 0%, #d39e00 100%)';
                     e.currentTarget.style.transform = 'translateY(-1px)';
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = 'linear-gradient(135deg, #6c757d 0%, #495057 100%)';
+                    e.currentTarget.style.background = 'linear-gradient(135deg, #ffc107 0%, #e0a800 100%)';
                     e.currentTarget.style.transform = 'translateY(0)';
                   }}
                 >
