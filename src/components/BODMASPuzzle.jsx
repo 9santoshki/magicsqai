@@ -565,6 +565,7 @@ const BODMASPuzzle = () => {
                       • Use BODMAS rule - left to right in rows and top to bottom in columns<br/>
                       • Fill the blanks with single digits from 1 to 9 to complete the equations<br/>
                       • Each digit can come only once in an equation of a row or column<br/>
+                      • All digits from 1 to 9 should come at least once in the overall square.<br/>
                     </div>
                   </div>
               ) : (
@@ -886,6 +887,26 @@ const BODMASPuzzle = () => {
                 {result}
               </div>
             )}
+                            <MdInfo style={{ fontSize: window.innerWidth < 768 ? '0.9rem' : '1rem' }} />
+                <h3 style={{
+                  margin: '0',
+                  fontSize: window.innerWidth < 768 ? 'clamp(0.9rem, 4vw, 1rem)' : 'clamp(1rem, 4vw, 1.1rem)',
+                  fontWeight: '500',
+                  letterSpacing: '0.2px',
+                }}>
+                  Daily Challenge
+                </h3>
+              </div>
+              <p style={{
+                margin: '0',
+                fontSize: window.innerWidth < 768 ? 'clamp(0.75rem, 3vw, 0.85rem)' : 'clamp(0.8rem, 3vw, 0.9rem)',
+                opacity: 0.9,
+                lineHeight: '1.4',
+                letterSpacing: '0.1px',
+              }}>
+                New puzzle available daily. Return tomorrow for your next mathematical challenge.
+              </p>
+
           </div>
         </div>
       </div>
