@@ -116,7 +116,7 @@ const PuzzleHeader = ({
             marginRight: '0', // Remove auto margin to bring text closer to icons
           }}>
             <FaShare style={{ fontSize: '0.9rem', color: '#495057' }} />
-            <span>Challenge your friends</span>
+            <span>Share challenge</span>
           </div>
           <div style={{
             display: 'flex',

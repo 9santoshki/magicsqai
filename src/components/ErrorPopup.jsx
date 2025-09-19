@@ -45,9 +45,7 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 300
   const timeoutRef = useRef(null);
 
   useEffect(() => {
-    console.log('ErrorPopup mounted');
     return () => {
-      console.log('ErrorPopup unmounted');
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
@@ -55,18 +53,14 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 300
   }, []);
 
   useEffect(() => {
-    console.log('ErrorPopup useEffect triggered', { isVisible, timeout });
     // Clear any existing timeout
     if (timeoutRef.current) {
-      console.log('Clearing existing timeout');
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
     
     if (isVisible) {
-      console.log('Setting timeout for', timeout, 'ms');
       timeoutRef.current = setTimeout(() => {
-        console.log('Timeout triggered, calling onClose');
         onClose();
         timeoutRef.current = null;
       }, timeout);
@@ -74,7 +68,6 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 300
   }, [isVisible]); // Only depend on isVisible
 
   if (!isVisible) {
-    console.log('ErrorPopup not visible, returning null');
     return null;
   }
 

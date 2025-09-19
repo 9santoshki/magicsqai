@@ -61,12 +61,7 @@ const BODMASPuzzle = () => {
   // Show error popup
   const showErrorPopup = (message, type = 'error') => {
     console.log('showErrorPopup called with:', { message, type });
-    // Close any existing popup first
-    setErrorPopup({ message: '', isVisible: false, type });
-    // Set the new message in the next render cycle
-    setTimeout(() => {
-      setErrorPopup({ message, isVisible: true, type });
-    }, 10);
+    setErrorPopup({ message, isVisible: true, type });
   };
 
   const closeErrorPopup = () => {
@@ -312,6 +307,46 @@ const BODMASPuzzle = () => {
   // Share functionality
   const shareResult = async (platform) => {
     console.log('Sharing to', platform);
+    
+    // Check if puzzle is completed
+    const isPuzzleCompleted = result && result.includes('🎉 Congratulations!');
+    
+    // Create different messages based on completion status
+    const message = isPuzzleCompleted 
+      ? `I solved today's BODMAS Challenge in ${formatTime(seconds)}! Can you beat my time? #MagicSquare #BrainTeaser #MathPuzzle`
+      : `Test your math skills with this fun puzzle. #MagicSquare #BrainTeaser #MathPuzzle`;
+      
+    const url = 'https://magicsquare.live';
+    
+    try {
+      switch (platform) {
+        case 'facebook':
+          window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(message)}`, '_blank');
+          break;
+        case 'twitter':
+          window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}&url=${encodeURIComponent(url)}`, '_blank');
+          break;
+        case 'whatsapp':
+          window.open(`https://wa.me/?text=${encodeURIComponent(`${message} ${url}`)}`, '_blank');
+          break;
+        case 'linkedin':
+          window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`, '_blank');
+          break;
+        default:
+          // Copy to clipboard as fallback
+          await navigator.clipboard.writeText(`${message} ${url}`);
+          showErrorPopup('Link copied to clipboard!', 'success');
+      }
+    } catch (error) {
+      console.error('Error sharing:', error);
+      showErrorPopup('Unable to share. Link copied to clipboard instead!', 'success');
+      try {
+        await navigator.clipboard.writeText(`${message} ${url}`);
+      } catch (clipboardError) {
+        console.error('Error copying to clipboard:', clipboardError);
+        showErrorPopup('Unable to copy to clipboard. Please try again.', 'error');
+      }
+    }
   };
 
   return (
