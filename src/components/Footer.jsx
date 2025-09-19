@@ -69,7 +69,7 @@ const Footer = () => {
               marginBottom: '12px',
               color: '#495057',
             }}>
-              Connect With Us
+              Follow us on:
             </h4>
             <div style={{
               display: 'flex',
@@ -77,9 +77,9 @@ const Footer = () => {
               marginBottom: '15px',
             }}>
               {[
-                { icon: FaFacebook, color: '#1877f2', url: '#' },
+                { icon: FaFacebook, color: '#1877f2', url: 'https://www.facebook.com/profile.php?id=61580108717050' },
                 { icon: FaTwitter, color: '#1da1f2', url: '#' },
-                { icon: FaLinkedin, color: '#0077b5', url: '#' },
+                { icon: FaLinkedin, color: '#0077b5', url: 'https://www.linkedin.com/company/108687992/admin/dashboard/' },
                 { icon: FaGithub, color: '#333', url: '#' },
               ].map(({ icon: Icon, color, url }, index) => (
                 <a

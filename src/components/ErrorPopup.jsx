@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react';
 import { FaExclamationTriangle, FaTimes } from 'react-icons/fa';
 
-const ErrorPopup = ({ message, isVisible, onClose, type = 'error' }) => {
+const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 3000 }) => {
   useEffect(() => {
     if (isVisible) {
       const timer = setTimeout(() => {
         onClose();
-      }, 1000); // Auto-close after 1 second for all error types
+      }, timeout);
 
       return () => clearTimeout(timer);
     }
-  }, [isVisible, onClose]);
+  }, [isVisible, onClose, timeout]);
 
   if (!isVisible) return null;
 
@@ -44,19 +44,20 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error' }) => {
       <div style={{
         background: '#ffffff',
         color: '#dc3545',
-        padding: '16px 20px',
-        borderRadius: '12px',
-        boxShadow: '0 8px 32px rgba(220, 53, 69, 0.2)',
-        border: '2px solid #dc3545',
+        padding: '20px 25px',
+        borderRadius: '15px',
+        boxShadow: '0 12px 40px rgba(220, 53, 69, 0.3)',
+        border: '3px solid #dc3545',
         display: 'flex',
         alignItems: 'center',
-        gap: '12px',
-        fontSize: '1.1rem',
-        fontWeight: '600',
+        gap: '15px',
+        fontSize: '1.2rem',
+        fontWeight: '700',
         lineHeight: '1.4',
+        textAlign: 'left',
       }}>
         <FaExclamationTriangle style={{
-          fontSize: '1.2rem',
+          fontSize: '1.5rem',
           color: '#dc3545',
           flexShrink: 0,
         }} />
@@ -75,14 +76,14 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error' }) => {
             background: 'rgba(220, 53, 69, 0.1)',
             border: '1px solid #dc3545',
             borderRadius: '50%',
-            width: '24px',
-            height: '24px',
+            width: '30px',
+            height: '30px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
             color: '#dc3545',
-            fontSize: '0.8rem',
+            fontSize: '1rem',
             flexShrink: 0,
             transition: 'background 0.2s ease',
           }}

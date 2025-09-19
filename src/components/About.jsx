@@ -52,9 +52,10 @@ const About = () => {
           </div>
           <p style={{
             margin: '0',
-            fontSize: '1.2rem',
-            color: '#6c757d',
-            fontWeight: '500',
+            fontSize: '1.3rem',
+            color: '#495057',
+            fontWeight: '600',
+            letterSpacing: '0.5px',
           }}>
             Boost your Brainpower!
           </p>

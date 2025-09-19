@@ -116,5 +116,29 @@
   }
   body {
     @apply bg-background text-foreground;
+    
+    /* Improve mobile responsiveness */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  
+  /* Ensure proper scrolling behavior */
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+  
+  /* Mobile-first responsive improvements */
+  @media (max-width: 768px) {
+    body {
+      font-size: 14px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    body {
+      font-size: 13px;
+    }
   }
 }

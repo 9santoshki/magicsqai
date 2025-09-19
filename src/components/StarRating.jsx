@@ -15,9 +15,9 @@ const StarRating = ({ difficulty, maxStars = 5 }) => {
           key={index}
           style={{
             fontSize: '1rem',
-            color: index < filledStars ? '#ffd700' : 'transparent',
-            stroke: '#ffd700',
-            strokeWidth: index < filledStars ? '0' : '20px',
+            color: index < filledStars ? '#ffd700' : '#e0e0e0', // Light gray for empty stars
+            stroke: index < filledStars ? 'none' : '#cccccc', // Border for empty stars
+            strokeWidth: index < filledStars ? '0' : '1px',
             filter: 'drop-shadow(0 1px 2px rgba(0,0,0,0.1))',
           }}
         />

@@ -23,11 +23,31 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
+    // Prepare email data
+    const emailData = {
+      to: 'magicsquarelive@gmail.com',
+      from: formData.email,
+      subject: `Magic Square Contact: ${formData.subject}`,
+      text: `
+        Name: ${formData.name}
+        Email: ${formData.email}
+        Subject: ${formData.subject}
+        
+        Message:
+        ${formData.message}
+      `
+    };
+    
+    // In a real application, you would send this to a backend service
+    // For now, we'll simulate and show instructions for email
     setTimeout(() => {
       setSubmitMessage('Thank you for your message! We\'ll get back to you soon.');
       setFormData({ name: '', email: '', subject: '', message: '' });
       setIsSubmitting(false);
+      
+      // Show email client with pre-filled data
+      const mailtoLink = `mailto:magicsquarelive@gmail.com?subject=${encodeURIComponent(`Magic Square Contact: ${formData.subject}`)}&body=${encodeURIComponent(`Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`)}`;
+      window.location.href = mailtoLink;
       
       // Clear success message after 5 seconds
       setTimeout(() => setSubmitMessage(''), 5000);
@@ -278,6 +298,18 @@ const Contact = () => {
                 placeholder="Tell us more about your inquiry..."
               />
             </div>
+          </div>
+
+          <div style={{
+            background: '#fff3cd',
+            border: '1px solid #ffeaa7',
+            borderRadius: '8px',
+            padding: '12px',
+            marginBottom: '20px',
+            fontSize: '0.9rem',
+            color: '#856404',
+          }}>
+            <strong>Note:</strong> Clicking "Send Message" will open your email client to send the message to magicsquarelive@gmail.com
           </div>
 
           <button

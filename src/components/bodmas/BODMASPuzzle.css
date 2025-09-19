@@ -1,0 +1,84 @@
+
+.bodmas-puzzle-container {
+  font-family: 'Segoe UI', 'Roboto', -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 10px 5px;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  min-height: 100vh;
+}
+
+.bodmas-puzzle-main {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 0 5px;
+}
+
+.bodmas-puzzle-game-container {
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  overflow: hidden;
+  border: 1px solid #dee2e6;
+}
+
+/* Responsive improvements for mobile */
+@media (max-width: 768px) {
+  .bodmas-puzzle-container {
+    padding: 5px 2px;
+  }
+  
+  .bodmas-puzzle-main {
+    max-width: 100%;
+    padding: 0 2px;
+  }
+  
+  .bodmas-puzzle-game-container {
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  }
+  
+  /* Compact layout for mobile */
+  .bodmas-puzzle-game-container > div {
+    margin-bottom: 8px;
+  }
+  
+  .bodmas-puzzle-game-container > div:last-child {
+    margin-bottom: 12px;
+  }
+  
+  /* Reduce padding between elements */
+  .bodmas-puzzle-game-container > div:not(:first-child) {
+    margin-top: -4px;
+  }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+  .bodmas-puzzle-container {
+    padding: 3px 1px;
+  }
+  
+  .bodmas-puzzle-main {
+    padding: 0 1px;
+  }
+  
+  /* More compact layout for very small screens */
+  .bodmas-puzzle-game-container > div {
+    margin-bottom: 6px;
+  }
+  
+  .bodmas-puzzle-game-container > div:last-child {
+    margin-bottom: 10px;
+  }
+  
+  /* Reduce padding between elements even more */
+  .bodmas-puzzle-game-container > div:not(:first-child) {
+    margin-top: -6px;
+  }
+}
+
+/* Larger screens */
+@media (min-width: 1200px) {
+  .bodmas-puzzle-main {
+    max-width: 600px;
+  }
+}
