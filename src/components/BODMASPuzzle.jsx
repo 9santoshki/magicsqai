@@ -909,7 +909,7 @@ const BODMASPuzzle = () => {
 
           </div>
         </div>
-      </div>
+      
       
       {/* Error Popup */}
       <ErrorPopup
