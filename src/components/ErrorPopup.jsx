@@ -1,18 +1,82 @@
-import React, { useEffect } from 'react';
-import { FaExclamationTriangle, FaTimes } from 'react-icons/fa';
+import React, { useEffect, useRef } from 'react';
+import { FaExclamationTriangle, FaTimes, FaInfoCircle, FaCheckCircle } from 'react-icons/fa';
 
 const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 3000 }) => {
-  useEffect(() => {
-    if (isVisible) {
-      const timer = setTimeout(() => {
-        onClose();
-      }, timeout);
-
-      return () => clearTimeout(timer);
+  // Define styles based on type
+  const getTypeStyles = (type) => {
+    switch (type) {
+      case 'success':
+        return {
+          backgroundColor: '#d4edda',
+          borderColor: '#28a745',
+          textColor: '#155724',
+          iconColor: '#28a745',
+          icon: <FaCheckCircle />
+        };
+      case 'info':
+        return {
+          backgroundColor: '#d1ecf1',
+          borderColor: '#17a2b8',
+          textColor: '#0c5460',
+          iconColor: '#17a2b8',
+          icon: <FaInfoCircle />
+        };
+      case 'warning':
+        return {
+          backgroundColor: '#fff3cd',
+          borderColor: '#ffc107',
+          textColor: '#856404',
+          iconColor: '#ffc107',
+          icon: <FaExclamationTriangle />
+        };
+      case 'error':
+      default:
+        return {
+          backgroundColor: '#ffffff',
+          borderColor: '#dc3545',
+          textColor: '#dc3545',
+          iconColor: '#dc3545',
+          icon: <FaExclamationTriangle />
+        };
     }
-  }, [isVisible, onClose, timeout]);
+  };
 
-  if (!isVisible) return null;
+  const styles = getTypeStyles(type);
+  const timeoutRef = useRef(null);
+
+  useEffect(() => {
+    console.log('ErrorPopup mounted');
+    return () => {
+      console.log('ErrorPopup unmounted');
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    console.log('ErrorPopup useEffect triggered', { isVisible, timeout });
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      console.log('Clearing existing timeout');
+      clearTimeout(timeoutRef.current);
+      timeoutRef.current = null;
+    }
+    
+    if (isVisible) {
+      console.log('Setting timeout for', timeout, 'ms');
+      timeoutRef.current = setTimeout(() => {
+        console.log('Timeout triggered, calling onClose');
+        onClose();
+        timeoutRef.current = null;
+      }, timeout);
+    }
+  }, [isVisible]); // Only depend on isVisible
+
+  if (!isVisible) {
+    console.log('ErrorPopup not visible, returning null');
+    return null;
+  }
 
   return (
     <div style={{
@@ -42,12 +106,12 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 300
       </style>
       
       <div style={{
-        background: '#ffffff',
-        color: '#dc3545',
+        background: styles.backgroundColor,
+        color: styles.textColor,
         padding: '20px 25px',
         borderRadius: '15px',
-        boxShadow: '0 12px 40px rgba(220, 53, 69, 0.3)',
-        border: '3px solid #dc3545',
+        boxShadow: `0 12px 40px rgba(${styles.iconColor === '#dc3545' ? '220, 53, 69' : styles.iconColor === '#28a745' ? '40, 167, 69' : styles.iconColor === '#17a2b8' ? '23, 162, 184' : '255, 193, 7'}, 0.3)`,
+        border: `3px solid ${styles.borderColor}`,
         display: 'flex',
         alignItems: 'center',
         gap: '15px',
@@ -56,16 +120,18 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 300
         lineHeight: '1.4',
         textAlign: 'left',
       }}>
-        <FaExclamationTriangle style={{
+        <div style={{
           fontSize: '1.5rem',
-          color: '#dc3545',
+          color: styles.iconColor,
           flexShrink: 0,
-        }} />
+        }}>
+          {styles.icon}
+        </div>
         
         <div style={{
           flex: 1,
           wordBreak: 'break-word',
-          color: '#dc3545',
+          color: styles.textColor,
         }}>
           {message}
         </div>
@@ -73,8 +139,8 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 300
         <button
           onClick={onClose}
           style={{
-            background: 'rgba(220, 53, 69, 0.1)',
-            border: '1px solid #dc3545',
+            background: `rgba(${styles.iconColor === '#dc3545' ? '220, 53, 69' : styles.iconColor === '#28a745' ? '40, 167, 69' : styles.iconColor === '#17a2b8' ? '23, 162, 184' : '255, 193, 7'}, 0.1)`,
+            border: `1px solid ${styles.borderColor}`,
             borderRadius: '50%',
             width: '30px',
             height: '30px',
@@ -82,16 +148,16 @@ const ErrorPopup = ({ message, isVisible, onClose, type = 'error', timeout = 300
             alignItems: 'center',
             justifyContent: 'center',
             cursor: 'pointer',
-            color: '#dc3545',
+            color: styles.iconColor,
             fontSize: '1rem',
             flexShrink: 0,
             transition: 'background 0.2s ease',
           }}
           onMouseEnter={(e) => {
-            e.currentTarget.style.background = 'rgba(220, 53, 69, 0.2)';
+            e.currentTarget.style.background = `rgba(${styles.iconColor === '#dc3545' ? '220, 53, 69' : styles.iconColor === '#28a745' ? '40, 167, 69' : styles.iconColor === '#17a2b8' ? '23, 162, 184' : '255, 193, 7'}, 0.2)`;
           }}
           onMouseLeave={(e) => {
-            e.currentTarget.style.background = 'rgba(220, 53, 69, 0.1)';
+            e.currentTarget.style.background = `rgba(${styles.iconColor === '#dc3545' ? '220, 53, 69' : styles.iconColor === '#28a745' ? '40, 167, 69' : styles.iconColor === '#17a2b8' ? '23, 162, 184' : '255, 193, 7'}, 0.1)`;
           }}
         >
           <FaTimes />

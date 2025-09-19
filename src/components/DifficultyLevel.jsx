@@ -26,8 +26,8 @@ const DifficultyLevel = ({ blanksLeft }) => {
       color: 'white',
       minWidth: 'fit-content',
     }}>
-      <span style={{ fontSize: '0.8rem' }}>{emoji}</span>
-      <span>{level}</span>
+      <span style={{ fontSize: '0.8rem', color: color }}>{emoji}</span>
+      <span style={{ color: color }}>{level}</span>
     </div>
   );
 };

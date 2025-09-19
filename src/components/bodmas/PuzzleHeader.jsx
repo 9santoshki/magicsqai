@@ -84,7 +84,7 @@ const PuzzleHeader = ({
           <FaClock style={{ fontSize: '0.9rem', color: '#6c757d' }} />
           <span style={{
             fontFamily: 'inherit',
-            fontSize: shareTextFontSize, // Match the share text font size
+            fontSize: timerFontSize, // Use the timerFontSize variable
             fontWeight: '600', // Match the share text font weight
             color: '#495057',
           }}>
@@ -136,7 +136,7 @@ const PuzzleHeader = ({
               { platform: 'twitter', icon: FaTwitter, color: '#1da1f2' },
               { platform: 'whatsapp', icon: FaWhatsapp, color: '#25d366' },
               { platform: 'linkedin', icon: FaLinkedin, color: '#0077b5' },
-            ].map(({ platform, icon: Icon, color }) => (
+            ].map(({ platform, icon, color }) => (
               <button
                 key={platform}
                 onClick={() => shareResult(platform)}
@@ -169,7 +169,7 @@ const PuzzleHeader = ({
                   e.currentTarget.style.boxShadow = '0 2px 6px rgba(0,0,0,0.1)';
                 }}
               >
-                <Icon />
+                {React.createElement(icon)}
               </button>
             ))}
           </div>

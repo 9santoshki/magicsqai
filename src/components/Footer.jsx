@@ -81,7 +81,7 @@ const Footer = () => {
                 { icon: FaTwitter, color: '#1da1f2', url: '#' },
                 { icon: FaLinkedin, color: '#0077b5', url: 'https://www.linkedin.com/company/108687992/admin/dashboard/' },
                 { icon: FaGithub, color: '#333', url: '#' },
-              ].map(({ icon: Icon, color, url }, index) => (
+              ].map(({ icon, color, url }, index) => (
                 <a
                   key={index}
                   href={url}
@@ -113,7 +113,7 @@ const Footer = () => {
                     e.currentTarget.style.boxShadow = 'none';
                   }}
                 >
-                  <Icon style={{ fontSize: '0.9rem' }} />
+                  {React.createElement(icon, { style: { fontSize: '0.9rem' } })}
                 </a>
               ))}
             </div>

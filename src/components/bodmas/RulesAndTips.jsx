@@ -27,7 +27,7 @@ const RulesAndTips = ({ mobileActiveTab, setMobileActiveTab }) => {
         {[
           { key: 'rules', label: 'Rules', icon: FaBook },
           { key: 'tips', label: 'Tips', icon: FaLightbulb },
-        ].map(({ key, label, icon: Icon }) => (
+        ].map(({ key, label, icon }) => (
           <button
             key={key}
             onClick={() => setMobileActiveTab(key)}
@@ -48,7 +48,7 @@ const RulesAndTips = ({ mobileActiveTab, setMobileActiveTab }) => {
               transition: 'all 0.2s ease',
             }}
           >
-            <Icon style={{ fontSize: iconSize }} />
+            {React.createElement(icon, { style: { fontSize: iconSize } })}
             {label}
           </button>
         ))}

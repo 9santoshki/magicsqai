@@ -23,21 +23,6 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Prepare email data
-    const emailData = {
-      to: 'magicsquarelive@gmail.com',
-      from: formData.email,
-      subject: `Magic Square Contact: ${formData.subject}`,
-      text: `
-        Name: ${formData.name}
-        Email: ${formData.email}
-        Subject: ${formData.subject}
-        
-        Message:
-        ${formData.message}
-      `
-    };
-    
     // In a real application, you would send this to a backend service
     // For now, we'll simulate and show instructions for email
     setTimeout(() => {

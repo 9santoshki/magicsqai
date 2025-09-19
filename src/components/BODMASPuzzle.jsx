@@ -13,8 +13,6 @@ import ControlPanel from './bodmas/ControlPanel';
 import ResultDisplay from './bodmas/ResultDisplay';
 import './bodmas/BODMASPuzzle.css';
 
-const urlToShare = 'https://magicsquare.live/';
-
 // Function to get daily puzzle based on current date
 const getDailyPuzzle = () => {
   const today = new Date();
@@ -47,7 +45,6 @@ const BODMASPuzzle = () => {
   const [selectedCell, setSelectedCell] = useState(null);
   const [result, setResult] = useState('');
   const [resultColor, setResultColor] = useState('black');
-  const [isPuzzleCompleted, setIsPuzzleCompleted] = useState(false);
   const [mobileActiveTab, setMobileActiveTab] = useState('rules');
   const [warningMessage, setWarningMessage] = useState('');
   const [errorPopup, setErrorPopup] = useState({ message: '', isVisible: false, type: 'error' });
@@ -63,15 +60,17 @@ const BODMASPuzzle = () => {
 
   // Show error popup
   const showErrorPopup = (message, type = 'error') => {
-    // Reset the popup first to ensure proper re-rendering
+    console.log('showErrorPopup called with:', { message, type });
+    // Close any existing popup first
     setErrorPopup({ message: '', isVisible: false, type });
     // Set the new message in the next render cycle
     setTimeout(() => {
       setErrorPopup({ message, isVisible: true, type });
-    }, 0);
+    }, 10);
   };
 
   const closeErrorPopup = () => {
+    console.log('closeErrorPopup called');
     setErrorPopup({ message: '', isVisible: false, type: 'error' });
   };
 
@@ -82,7 +81,6 @@ const BODMASPuzzle = () => {
     setIsTimerRunning(true);
     setSelectedCell(null);
     setResult('');
-    setIsPuzzleCompleted(false);
     setWarningMessage('');
   }, [config]);
 
@@ -206,7 +204,6 @@ const BODMASPuzzle = () => {
     setCellValues(computeInitialCellValues(config));
     setSelectedCell(null);
     setResult('');
-    setIsPuzzleCompleted(false);
     setSeconds(0);
     setIsTimerRunning(true);
   };
@@ -215,7 +212,7 @@ const BODMASPuzzle = () => {
   const evaluateExpression = (expression) => {
     try {
       return Function(`"use strict"; return (${expression})`)();
-    } catch (error) {
+    } catch {
       return null;
     }
   };
@@ -310,7 +307,6 @@ const BODMASPuzzle = () => {
 
     setResult('🎉 Congratulations! Puzzle solved correctly!\n\nDaily Challenge - Boost your Brainpower!\nReturn tomorrow for a new challenge!');
     setResultColor('#28a745');
-    setIsPuzzleCompleted(true);
   };
 
   // Share functionality
