@@ -120,8 +120,8 @@ export const puzzleConfigs = [
     ['/', '-', '-', '/', '+'],
     ['-', '*', '*', '-', '*']
   ],
-  rowTargets: [6, 6, 28, 20, 0],
-  colTargets: [0, 0, -8, 26, 0],
+  rowTargets: [6, 6, 28, 20, 20],
+  colTargets: [0, -10, -8, 26, 0],
   answers: [
     [1, 7, 8, 4, 9],
     [2, 1, 5, 7, 3],
