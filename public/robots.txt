@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://magicsquare.live/sitemap.xml
+
+# Prevent crawling of specific paths if needed
+# Disallow: /admin/
+# Disallow: /private/

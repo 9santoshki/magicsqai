@@ -93,24 +93,21 @@ const Footer = () => {
                     justifyContent: 'center',
                     width: '32px',
                     height: '32px',
-                    background: '#ffffff',
+                    background: color,
                     borderRadius: '50%',
-                    color: '#6c757d',
+                    color: 'white',
                     textDecoration: 'none',
-                    transition: 'all 0.2s ease',
-                    border: '1px solid #e9ecef',
+                    transition: 'all 0.3s ease',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    boxShadow: `0 2px 6px ${color}80`,
                   }}
                   onMouseEnter={(e) => {
-                    e.currentTarget.style.background = color;
-                    e.currentTarget.style.color = 'white';
-                    e.currentTarget.style.transform = 'translateY(-2px)';
-                    e.currentTarget.style.boxShadow = '0 4px 8px rgba(0,0,0,0.15)';
+                    e.currentTarget.style.transform = 'translateY(-3px) scale(1.1)';
+                    e.currentTarget.style.boxShadow = `0 6px 12px ${color}CC`;
                   }}
                   onMouseLeave={(e) => {
-                    e.currentTarget.style.background = '#ffffff';
-                    e.currentTarget.style.color = '#6c757d';
-                    e.currentTarget.style.transform = 'translateY(0)';
-                    e.currentTarget.style.boxShadow = 'none';
+                    e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                    e.currentTarget.style.boxShadow = `0 2px 6px ${color}80`;
                   }}
                 >
                   {React.createElement(icon, { style: { fontSize: '0.9rem' } })}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import BODMASPuzzle from './components/BODMASPuzzle';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -8,6 +8,21 @@ import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+
+  // Update document title based on current page
+  useEffect(() => {
+    switch (currentPage) {
+      case 'about':
+        document.title = 'About Magic Square - BODMAS Challenge Game';
+        break;
+      case 'contact':
+        document.title = 'Contact Us - Magic Square BODMAS Puzzle';
+        break;
+      case 'home':
+      default:
+        document.title = 'BODMAS Challenge - Daily Mathematical Puzzle Game';
+    }
+  }, [currentPage]);
 
   const handleNavigate = (page) => {
     setCurrentPage(page);
