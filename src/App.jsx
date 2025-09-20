@@ -8,6 +8,7 @@ import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [puzzleId, setPuzzleId] = useState(null);
 
   // Update document title based on current page
   useEffect(() => {
@@ -24,8 +25,21 @@ function App() {
     }
   }, [currentPage]);
 
+  // Parse puzzle ID from URL on component mount
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const idParam = urlParams.get('puzzleId');
+    if (idParam && !isNaN(idParam)) {
+      setPuzzleId(parseInt(idParam, 10));
+    }
+  }, []);
+
   const handleNavigate = (page) => {
     setCurrentPage(page);
+    // Clear puzzle ID when navigating away from home
+    if (page !== 'home') {
+      setPuzzleId(null);
+    }
   };
 
   const renderPage = () => {
@@ -36,7 +50,7 @@ function App() {
         return <Contact />;
       case 'home':
       default:
-        return <BODMASPuzzle />;
+        return <BODMASPuzzle puzzleId={puzzleId} />;
     }
   };
 

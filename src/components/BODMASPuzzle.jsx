@@ -26,9 +26,15 @@ const getDailyPuzzle = () => {
   return puzzleConfigs[puzzleIndex];
 };
 
-const BODMASPuzzle = () => {
-  // Get today's puzzle
-  const [config] = useState(() => getDailyPuzzle());
+// Function to get puzzle by ID
+const getPuzzleById = (id) => {
+  const puzzle = puzzleConfigs.find(p => p.id === id);
+  return puzzle || getDailyPuzzle(); // Fallback to daily puzzle if ID not found
+};
+
+const BODMASPuzzle = ({ puzzleId }) => {
+  // Get puzzle by ID if provided, otherwise get today's puzzle
+  const [config] = useState(() => puzzleId ? getPuzzleById(puzzleId) : getDailyPuzzle());
   
   // Timer state
   const computeInitialCellValues = (config) => {
