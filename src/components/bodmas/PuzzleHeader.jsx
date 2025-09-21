@@ -40,7 +40,7 @@ const PuzzleHeader = ({
         <h2 style={{
           margin: '0',
           fontSize: titleFontSize,
-          fontWeight: '700',
+          fontWeight: '300',
           color: '#2c3e50',
           textShadow: '0 1px 2px rgba(0,0,0,0.1)',
         }}>

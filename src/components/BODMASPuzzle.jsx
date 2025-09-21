@@ -33,11 +33,11 @@ const getPuzzleById = (id) => {
 };
 
 const BODMASPuzzle = ({ puzzleId }) => {
-  // Get puzzle by ID if provided, otherwise get today's puzzle
-  const [config] = useState(() => puzzleId ? getPuzzleById(puzzleId) : getDailyPuzzle());
+  const [config, setConfig] = useState(null);
   
   // Timer state
   const computeInitialCellValues = (config) => {
+    if (!config) return {};
     return config.grid.reduce((acc, row, rowIndex) => {
       row.forEach((cell, colIndex) => {
         acc[`cell-${rowIndex + 1}-${colIndex + 1}`] = cell.fixed ? cell.value : '';
@@ -58,11 +58,64 @@ const BODMASPuzzle = ({ puzzleId }) => {
   const puzzleRef = useRef();
 
   // Initialize cell values from config
-  const [cellValues, setCellValues] = useState(
-    () => computeInitialCellValues(config)
-  );
+  const [cellValues, setCellValues] = useState({});
 
-  const difficultyStars = Math.max(1, Math.min(5, config.difficulty));
+  // Load puzzle configuration
+  useEffect(() => {
+    const loadPuzzle = () => {
+      try {
+        const puzzleConfig = puzzleId ? getPuzzleById(puzzleId) : getDailyPuzzle();
+        setConfig(puzzleConfig);
+        setCellValues(computeInitialCellValues(puzzleConfig));
+      } catch (error) {
+        console.error('Error loading puzzle:', error);
+        // Set a fallback puzzle
+        const fallbackPuzzle = {
+          id: 0,
+          name: "Sample Puzzle",
+          grid: [
+            [
+              { value: '5', fixed: true },
+              { value: '', fixed: false },
+              { value: '', fixed: false }
+            ],
+            [
+              { value: '', fixed: false },
+              { value: '3', fixed: true },
+              { value: '', fixed: false }
+            ],
+            [
+              { value: '', fixed: false },
+              { value: '', fixed: false },
+              { value: '1', fixed: true }
+            ]
+          ],
+          rowOperators: [
+            ['+', '*'],
+            ['/', '-']
+          ],
+          colOperators: [
+            ['+', '/'],
+            ['*', '-']
+          ],
+          rowTargets: [20, 2],
+          colTargets: [10, 3],
+          answers: [
+            [5, 4, 2],
+            [2, 3, 4],
+            [1, 5, 1]
+          ],
+          difficulty: 3
+        };
+        setConfig(fallbackPuzzle);
+        setCellValues(computeInitialCellValues(fallbackPuzzle));
+      }
+    };
+
+    loadPuzzle();
+  }, [puzzleId]);
+
+  const difficultyStars = config ? Math.max(1, Math.min(5, config.difficulty)) : 0;
 
   // Show error popup
   const showErrorPopup = (message, type = 'error') => {
@@ -77,12 +130,14 @@ const BODMASPuzzle = ({ puzzleId }) => {
 
   // Reset when config changes
   useEffect(() => {
-    setCellValues(computeInitialCellValues(config));
-    setSeconds(0);
-    setIsTimerRunning(true);
-    setSelectedCell(null);
-    setResult('');
-    setWarningMessage('');
+    if (config) {
+      setCellValues(computeInitialCellValues(config));
+      setSeconds(0);
+      setIsTimerRunning(true);
+      setSelectedCell(null);
+      setResult('');
+      setWarningMessage('');
+    }
   }, [config]);
 
   // Timer effect
@@ -111,6 +166,8 @@ const BODMASPuzzle = ({ puzzleId }) => {
 
   // Check if number is allowed in the cell and return detailed error info
   const checkNumberAllowed = useCallback((number, cellId) => {
+    if (!config) return { allowed: false, error: 'Puzzle not loaded' };
+    
     const [_, row, col] = cellId.split('-').map(Number);
     const size = config.grid.length;
 
@@ -133,7 +190,7 @@ const BODMASPuzzle = ({ puzzleId }) => {
     }
 
     return { allowed: true, error: null };
-  }, [cellValues, config.grid.length]);
+  }, [cellValues, config]);
 
   // Handle cell selection
   const handleCellClick = (cellId) => {
@@ -202,11 +259,13 @@ const BODMASPuzzle = ({ puzzleId }) => {
 
   // Handle reset
   const handleReset = () => {
-    setCellValues(computeInitialCellValues(config));
-    setSelectedCell(null);
-    setResult('');
-    setSeconds(0);
-    setIsTimerRunning(true);
+    if (config) {
+      setCellValues(computeInitialCellValues(config));
+      setSelectedCell(null);
+      setResult('');
+      setSeconds(0);
+      setIsTimerRunning(true);
+    }
   };
 
   // Evaluate expression using BODMAS
@@ -220,6 +279,11 @@ const BODMASPuzzle = ({ puzzleId }) => {
 
   // Check solution
   const checkSolution = () => {
+    if (!config) {
+      showErrorPopup('❌ Puzzle not loaded', 'error');
+      return;
+    }
+    
     const size = config.grid.length;
     let allFilled = true;
 
@@ -306,7 +370,10 @@ const BODMASPuzzle = ({ puzzleId }) => {
       }
     }
 
-    setResult('🎉 Congratulations! Puzzle solved correctly!\n\nDaily Challenge - Boost your Brainpower!\nReturn tomorrow for a new challenge!');
+    setResult(`🎉 Congratulations! Puzzle solved correctly!
+
+Daily Challenge - Boost your Brainpower!
+Return tomorrow for a new challenge!`);
     setResultColor('#28a745');
   };
 
@@ -354,6 +421,21 @@ const BODMASPuzzle = ({ puzzleId }) => {
       }
     }
   };
+
+  // Show loading state while puzzle is loading
+  if (!config) {
+    return (
+      <div className="bodmas-puzzle-container" ref={puzzleRef}>
+        <div className="bodmas-puzzle-main">
+          <div className="bodmas-puzzle-game-container">
+            <div style={{ padding: '20px', textAlign: 'center' }}>
+              <p>Loading puzzle...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bodmas-puzzle-container" ref={puzzleRef}>

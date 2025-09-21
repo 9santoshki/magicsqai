@@ -56,8 +56,8 @@ const Footer = () => {
               margin: '0',
               color: '#6c757d',
             }}>
-              Challenge your mathematical skills with daily BODMAS puzzles. 
-              Improve your order of operations knowledge while having fun!
+              A quick, fun puzzle that'll test your logic, speed, and pattern recognition. 
+              Challenge your friends to beat your time.
             </p>
           </div>
 
@@ -79,7 +79,7 @@ const Footer = () => {
               {[
                 { icon: FaFacebook, color: '#1877f2', url: 'https://www.facebook.com/profile.php?id=61580108717050' },
                 { icon: FaTwitter, color: '#1da1f2', url: '#' },
-                { icon: FaLinkedin, color: '#0077b5', url: 'https://www.linkedin.com/company/108687992/admin/dashboard/' },
+                { icon: FaLinkedin, color: '#0077b5', url: 'https://www.linkedin.com/company/108687992' },
                 { icon: FaGithub, color: '#333', url: '#' },
               ].map(({ icon, color, url }, index) => (
                 <a

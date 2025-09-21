@@ -44,6 +44,7 @@ const Header = ({ currentPage, onNavigate }) => {
             cursor: 'pointer',
             transition: 'transform 0.2s ease',
             minWidth: '0', // Allow flex shrinking
+            flex: isMobile ? '1' : 'none', // Allow expanding on mobile
           }}
           onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.02)'}
           onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
@@ -66,9 +67,11 @@ const Header = ({ currentPage, onNavigate }) => {
               margin: '0',
               letterSpacing: '0.3px',
               color: '#343a40',
-              whiteSpace: 'nowrap',
+              whiteSpace: isMobile ? 'normal' : 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
+              lineHeight: isMobile ? '1.2' : 'normal',
+              wordBreak: isMobile ? 'break-word' : 'normal',
             }}>
               Magic Square
             </h1>
@@ -78,10 +81,12 @@ const Header = ({ currentPage, onNavigate }) => {
               opacity: 0.9,
               fontWeight: '500',
               color: '#495057',
-              whiteSpace: 'nowrap',
+              whiteSpace: isMobile ? 'normal' : 'nowrap',
               overflow: 'hidden',
               textOverflow: 'ellipsis',
               letterSpacing: '0.5px',
+              lineHeight: isMobile ? '1.1' : 'normal',
+              wordBreak: isMobile ? 'break-word' : 'normal',
             }}>
               Boost your Brainpower!
             </p>
@@ -94,6 +99,8 @@ const Header = ({ currentPage, onNavigate }) => {
           gap: navGap,
           alignItems: 'center',
           flexShrink: 0,
+          flexWrap: isMobile ? 'wrap' : 'nowrap',
+          justifyContent: isMobile ? 'flex-end' : 'normal',
         }}>
           {[
             { key: 'home', label: 'Home' },
@@ -110,7 +117,7 @@ const Header = ({ currentPage, onNavigate }) => {
                 padding: buttonPadding,
                 borderRadius: '6px',
                 cursor: 'pointer',
-                fontSize: buttonFontSize,
+                fontSize: isMobile ? '0.75rem' : buttonFontSize,
                 fontWeight: '500',
                 transition: 'all 0.2s ease',
                 letterSpacing: '0.2px',

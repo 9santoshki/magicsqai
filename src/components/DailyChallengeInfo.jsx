@@ -46,7 +46,7 @@ const DailyChallengeInfo = () => {
             lineHeight: '1.4',
             letterSpacing: '-0.05em'
           }}>
-            New puzzle available daily. Return tomorrow for your next mathematical challenge.
+            Test your brainpower. Return tomorrow for a new challenge.
           </p>
         </div>
       </div>
