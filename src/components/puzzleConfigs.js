@@ -66,7 +66,7 @@ export const puzzleConfigs = [
     difficulty: 3
   },
 
-  // Puzzle 2: Medium
+// Puzzle 2: Medium
 {
   id: 2,
   name: "Puzzle 2: Medium",
@@ -101,7 +101,7 @@ export const puzzleConfigs = [
     ],
     [
       { value: '7', fixed: true },
-      { value: '2', fixed: true },
+      { value: '4', fixed: true },
       { value: '', fixed: false },
       { value: '', fixed: false },
       { value: '', fixed: false }
@@ -120,14 +120,14 @@ export const puzzleConfigs = [
     ['/', '-', '-', '/', '+'],
     ['-', '*', '*', '-', '*']
   ],
-  rowTargets: [6, 6, 28, 20, 20],
+  rowTargets: [6, 6, 28, 20, 2],
   colTargets: [0, -10, -8, 26, 0],
   answers: [
     [1, 7, 8, 4, 9],
     [2, 1, 5, 7, 3],
     [9, 3, 1, 8, 5],
     [3, 5, 7, 2, 1],
-    [7, 2, 3, 6, 2]
+    [7, 4, 3, 6, 2]
   ],
   difficulty: 3
 },
