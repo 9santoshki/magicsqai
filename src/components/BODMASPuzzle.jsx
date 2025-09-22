@@ -208,13 +208,14 @@ const BODMASPuzzle = ({ puzzleId }) => {
       return;
     }
     
-    console.log('Checking if number is allowed:', number, selectedCell);
-    const validation = checkNumberAllowed(number, selectedCell);
+    const numValue = typeof number === 'string' ? parseInt(number) : number;
+    console.log('Checking if number is allowed:', numValue, selectedCell);
+    const validation = checkNumberAllowed(numValue, selectedCell);
     console.log('Validation result:', validation);
     
     if (validation.allowed) {
       console.log('Number allowed, setting cell value');
-      setCellValues(prev => ({ ...prev, [selectedCell]: number.toString() }));
+      setCellValues(prev => ({ ...prev, [selectedCell]: numValue.toString() }));
       setSelectedCell(null);
     } else {
       console.log('Number not allowed, showing error:', validation.error);
