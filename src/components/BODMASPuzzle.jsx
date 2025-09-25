@@ -331,6 +331,10 @@ const BODMASPuzzle = ({ puzzleId }) => {
       return;
     }
 
+    let incorrectRows = [];
+    let incorrectCols = [];
+
+    // Check all rows first
     for (let row = 1; row <= size; row++) {
       let expression = '';
       for (let col = 1; col <= size; col++) {
@@ -344,13 +348,11 @@ const BODMASPuzzle = ({ puzzleId }) => {
       const result = evaluateExpression(expression);
       const expected = config.rowTargets[row - 1];
       if (result !== expected) {
-        showErrorPopup(`❌ Row ${row} equation is incorrect.`, 'error');
-        setResult(`❌ Row ${row} equation is incorrect.`);
-        setResultColor('#dc3545');
-        return;
+        incorrectRows.push(row);
       }
     }
 
+    // Check all columns
     for (let col = 1; col <= size; col++) {
       let expression = '';
       for (let row = 1; row <= size; row++) {
@@ -364,11 +366,25 @@ const BODMASPuzzle = ({ puzzleId }) => {
       const result = evaluateExpression(expression);
       const expected = config.colTargets[col - 1];
       if (result !== expected) {
-        showErrorPopup(`❌ Column ${col} equation is incorrect.`, 'error');
-        setResult(`❌ Column ${col} equation is incorrect.`);
-        setResultColor('#dc3545');
-        return;
+        incorrectCols.push(col);
       }
+    }
+
+    // If there are incorrect rows or columns, provide detailed feedback
+    if (incorrectRows.length > 0 || incorrectCols.length > 0) {
+      let errorMessage = '';
+      if (incorrectRows.length > 0) {
+        errorMessage += `❌ Incorrect rows: ${incorrectRows.join(', ')}\n`;
+      }
+      if (incorrectCols.length > 0) {
+        errorMessage += `❌ Incorrect columns: ${incorrectCols.join(', ')}\n`;
+      }
+      errorMessage += 'Please check your calculations and try again.';
+      
+      showErrorPopup(errorMessage.replace(/\n/g, ' '), 'error');
+      setResult(errorMessage);
+      setResultColor('#dc3545');
+      return;
     }
 
     setResult(`🎉 Congratulations! Puzzle solved correctly!
@@ -376,6 +392,7 @@ const BODMASPuzzle = ({ puzzleId }) => {
 Daily Challenge - Boost your Brainpower!
 Return tomorrow for a new challenge!`);
     setResultColor('#28a745');
+    setIsTimerRunning(false); // Stop the timer when puzzle is solved correctly
   };
 
   // Share functionality
@@ -387,8 +404,8 @@ Return tomorrow for a new challenge!`);
     
     // Create different messages based on completion status
     const message = isPuzzleCompleted 
-      ? `I solved today's BODMAS Challenge in ${formatTime(seconds)}! Can you beat my time? #MagicSquare #BrainTeaser #MathPuzzle`
-      : `Test your math skills with this fun puzzle. #MagicSquare #BrainTeaser #MathPuzzle`;
+      ? `I solved today's Magic Square Challenge in ${formatTime(seconds)}! Can you beat my time? #MagicSquare #BrainTeaser #MathPuzzle`
+      : `Test your math skills with this Magic Square puzzle. #MagicSquare #BrainTeaser #MathPuzzle`;
       
     const url = 'https://magicsquare.live';
     

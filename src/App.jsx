@@ -14,14 +14,14 @@ function App() {
   useEffect(() => {
     switch (currentPage) {
       case 'about':
-        document.title = 'About Magic Square - BODMAS Challenge Game';
+        document.title = 'About Magic Square - Mathematical Puzzle Game';
         break;
       case 'contact':
-        document.title = 'Contact Us - Magic Square BODMAS Puzzle';
+        document.title = 'Contact Us - Magic Square Puzzle';
         break;
       case 'home':
       default:
-        document.title = 'BODMAS Challenge - Daily Mathematical Puzzle Game';
+        document.title = 'Magic Square - Daily Mathematical Puzzle Game';
     }
   }, [currentPage]);
 

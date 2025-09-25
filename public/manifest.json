@@ -1,7 +1,7 @@
 {
   "short_name": "Magic Square",
-  "name": "BODMAS Challenge - Daily Mathematical Puzzle Game",
-  "description": "Boost your brainpower with daily BODMAS puzzles! Solve mathematical equations using order of operations in a fun 5x5 grid game.",
+  "name": "Magic Square - Daily Mathematical Puzzle Game",
+  "description": "Boost your brainpower with daily mathematical puzzles! Solve equations using order of operations in a fun 5x5 grid game.",
   "icons": [
     {
       "src": "/magicsqlogo.png",

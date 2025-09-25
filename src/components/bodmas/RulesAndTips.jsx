@@ -82,7 +82,7 @@ const RulesAndTips = ({ mobileActiveTab, setMobileActiveTab }) => {
             <div style={{ fontSize: rulesFontSize }}>
               • Use BODMAS rule to solve equations: LEFT to RIGHT in rows, TOP to BOTTOM in columns<br/>
               • First solve Division (/) or Multiplication (*) (whichever comes first from left), then Addition (+) or Subtraction (-)<br/>
-              • Example: 7*5+4/2-1 = 35+4/2-1 = 35+2-1 = 37-1 = 36
+              • Example: 7*5+4/2-1 = 35+4/2-1 = 35+2-1 = 37-1 = 36<br/>
             </div>
           </div>
         )}

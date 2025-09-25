@@ -68,9 +68,9 @@ const PuzzleGrid = ({
                               border: isFixed ? '1px solid #6c757d' : 
                                 selectedCell === cellId ? '2px solid #007bff' : '1px solid #000000',
                               borderRadius: '3px',
-                              background: isFixed ? '#e9ecef' : 
+                              background: isFixed ? '#d1d5db' : // Darker background for fixed cells
                                 selectedCell === cellId ? '#e3f2fd' : '#ffffff',
-                              color: isFixed ? '#6c757d' : '#000000',
+                              color: isFixed ? '#495057' : '#000000', // Darker text color for fixed cells
                               transition: 'all 0.2s ease',
                               cursor: isFixed ? 'not-allowed' : 'pointer',
                               boxShadow: selectedCell === cellId ? 
