@@ -376,9 +376,7 @@ const BODMASPuzzle = ({ puzzleId }) => {
       if (incorrectRows.length > 0) {
         errorMessage += `❌ Incorrect rows: ${incorrectRows.join(', ')}\n`;
       }
-      if (incorrectCols.length > 0) {
-        errorMessage += `❌ Incorrect columns: ${incorrectCols.join(', ')}\n`;
-      }
+      // Only show row information, not columns, as per requirement
       errorMessage += 'Please check your calculations and try again.';
       
       showErrorPopup(errorMessage.replace(/\n/g, ' '), 'error');
