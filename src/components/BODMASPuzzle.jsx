@@ -11,6 +11,7 @@ import RulesAndTips from './bodmas/RulesAndTips';
 import PuzzleGrid from './bodmas/PuzzleGrid';
 import ControlPanel from './bodmas/ControlPanel';
 import ResultDisplay from './bodmas/ResultDisplay';
+import DragInstructions from './ui/DragInstructions';
 import './bodmas/BODMASPuzzle.css';
 
 // Function to get daily puzzle based on current date (original algorithm)
@@ -55,8 +56,10 @@ const BODMASPuzzle = ({ puzzleId }) => {
   const [seconds, setSeconds] = useState(0);
   const [isTimerRunning, setIsTimerRunning] = useState(true);
   const [selectedCell, setSelectedCell] = useState(null);
+  const [dragOverCell, setDragOverCell] = useState(null);
   const [result, setResult] = useState('');
   const [resultColor, setResultColor] = useState('black');
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth < 768);
   const [mobileActiveTab, setMobileActiveTab] = useState('rules');
   const [warningMessage, setWarningMessage] = useState('');
   const [errorPopup, setErrorPopup] = useState({ message: '', isVisible: false, type: 'error' });
@@ -146,6 +149,16 @@ const BODMASPuzzle = ({ puzzleId }) => {
     }
   }, [config]);
 
+  // Handle window resize to detect mobile/desktop view changes
+  useEffect(() => {
+    const checkIsMobile = () => {
+      setIsMobileView(window.innerWidth < 768);
+    };
+
+    window.addEventListener('resize', checkIsMobile);
+    return () => window.removeEventListener('resize', checkIsMobile);
+  }, []);
+
   // Timer effect
   useEffect(() => {
     if (isTimerRunning) {
@@ -204,25 +217,31 @@ const BODMASPuzzle = ({ puzzleId }) => {
   };
 
   // Handle number button click
-  const handleNumberClick = (number) => {
-    console.log('handleNumberClick called with:', number);
+  const handleNumberClick = (number, targetCellId = null) => {
+    console.log('handleNumberClick called with:', number, 'targetCellId:', targetCellId);
     console.log('selectedCell:', selectedCell);
     
-    if (!selectedCell) {
+    // If a target cell is provided (e.g., from drag-and-drop), use it instead of the currently selected cell
+    const cellId = targetCellId || selectedCell;
+    
+    if (!cellId) {
       console.log('No cell selected, showing error');
       showErrorPopup('⚠️ Please select a cell first', 'error');
       return;
     }
     
     const numValue = typeof number === 'string' ? parseInt(number) : number;
-    console.log('Checking if number is allowed:', numValue, selectedCell);
-    const validation = checkNumberAllowed(numValue, selectedCell);
+    console.log('Checking if number is allowed:', numValue, cellId);
+    const validation = checkNumberAllowed(numValue, cellId);
     console.log('Validation result:', validation);
     
     if (validation.allowed) {
       console.log('Number allowed, setting cell value');
-      setCellValues(prev => ({ ...prev, [selectedCell]: numValue.toString() }));
-      setSelectedCell(null);
+      setCellValues(prev => ({ ...prev, [cellId]: numValue.toString() }));
+      // Only clear selection if no target cell was provided explicitly (normal button click)
+      if (!targetCellId) {
+        setSelectedCell(null);
+      }
     } else {
       console.log('Number not allowed, showing error:', validation.error);
       showErrorPopup(`❌ Rule Violation: ${validation.error}`, 'error');
@@ -481,15 +500,19 @@ const BODMASPuzzle = ({ puzzleId }) => {
             config={config}
             cellValues={cellValues}
             selectedCell={selectedCell}
+            dragOverCell={dragOverCell}
             handleCellChange={handleCellChange}
             handleCellClick={handleCellClick}
             setSelectedCell={setSelectedCell}
           />
+          <DragInstructions isMobileView={isMobileView} />
           <ControlPanel
             handleNumberClick={handleNumberClick}
             handleDelete={handleDelete}
             handleReset={handleReset}
             checkSolution={checkSolution}
+            isMobileView={isMobileView}
+            setDragOverCell={setDragOverCell}
           />
           <ResultDisplay result={result} resultColor={resultColor} />
           <DailyChallengeInfo />

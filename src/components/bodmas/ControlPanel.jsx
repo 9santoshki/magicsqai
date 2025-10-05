@@ -1,14 +1,17 @@
 
 import React from 'react';
 import { MdDelete, MdRefresh, MdCheck } from 'react-icons/md';
+import DraggableNumber from '../ui/DraggableNumber';
 
 const ControlPanel = ({
   handleNumberClick,
   handleDelete,
   handleReset,
   checkSolution,
+  isMobileView,
+  setDragOverCell,
 }) => {
-  const isMobile = window.innerWidth < 768;
+  const isMobile = isMobileView; // Use isMobileView prop instead of local state
   
   // Slightly bigger sizing for mobile to utilize space
   const padding = isMobile ? '5px' : '10px';
@@ -30,42 +33,61 @@ const ControlPanel = ({
         marginBottom: isMobile ? '5px' : '8px',
         justifyContent: 'center',
         flexWrap: 'wrap',
+        position: 'relative', // Needed for draggable elements positioning
       }}>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
-          <button
-            key={num}
-            onClick={() => handleNumberClick(num.toString())}
-            style={{
-              minWidth: isMobile ? '24px' : '28px',
-              height: isMobile ? '24px' : '28px',
-              fontSize: isMobile ? '0.7rem' : '0.8rem',
-              flex: '1',
-              fontWeight: '600',
-              background: 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease',
-              boxShadow: '0 1px 3px rgba(0, 123, 255, 0.2)',
-              touchAction: 'manipulation',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(135deg, #0056b3 0%, #004085 100%)';
-              e.currentTarget.style.transform = 'translateY(-1px)';
-              e.currentTarget.style.boxShadow = '0 2px 5px rgba(0, 123, 255, 0.3)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)';
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 123, 255, 0.2)';
-            }}
-            onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
-            onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
-          >
-            {num}
-          </button>
-        ))}
+        {isMobile ? (
+          // Draggable numbers for mobile
+          [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
+            <div key={num} style={{ position: 'relative', display: 'inline-block' }}>
+              <DraggableNumber
+                number={num.toString()}
+                onDrop={(number, cellId) => {
+                  // Call the handleNumberClick function with the target cell ID
+                  handleNumberClick(number, cellId);
+                }}
+                isMobile={isMobile}
+                setDragOverCell={setDragOverCell}
+              />
+            </div>
+          ))
+        ) : (
+          // Regular buttons for desktop
+          [1, 2, 3, 4, 5, 6, 7, 8, 9].map(num => (
+            <button
+              key={num}
+              onClick={() => handleNumberClick(num.toString())}
+              style={{
+                minWidth: isMobile ? '24px' : '28px',
+                height: isMobile ? '24px' : '28px',
+                fontSize: isMobile ? '0.7rem' : '0.8rem',
+                flex: '1',
+                fontWeight: '600',
+                background: 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)',
+                color: 'white',
+                border: 'none',
+                borderRadius: '4px',
+                cursor: 'pointer',
+                transition: 'all 0.2s ease',
+                boxShadow: '0 1px 3px rgba(0, 123, 255, 0.2)',
+                touchAction: 'manipulation',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #0056b3 0%, #004085 100%)';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+                e.currentTarget.style.boxShadow = '0 2px 5px rgba(0, 123, 255, 0.2)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = 'linear-gradient(135deg, #007bff 0%, #0056b3 100%)';
+                e.currentTarget.style.transform = 'translateY(0)';
+                e.currentTarget.style.boxShadow = '0 1px 3px rgba(0, 123, 255, 0.2)';
+              }}
+              onTouchStart={(e) => e.currentTarget.style.transform = 'scale(0.95)'}
+              onTouchEnd={(e) => e.currentTarget.style.transform = 'scale(1)'}
+            >
+              {num}
+            </button>
+          ))
+        )}
       </div>
       
       <div style={{
