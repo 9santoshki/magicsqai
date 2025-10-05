@@ -4,11 +4,12 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import About from './components/About';
 import Contact from './components/Contact';
+import puzzleConfig from './config/puzzleConfig';
 import './App.css';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
-  const [puzzleId, setPuzzleId] = useState(null);
+  const [puzzleId, setPuzzleId] = useState(puzzleConfig.defaultPuzzleId);
 
   // Update document title based on current page
   useEffect(() => {

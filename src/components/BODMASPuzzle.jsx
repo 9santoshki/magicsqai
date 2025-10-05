@@ -13,7 +13,7 @@ import ControlPanel from './bodmas/ControlPanel';
 import ResultDisplay from './bodmas/ResultDisplay';
 import './bodmas/BODMASPuzzle.css';
 
-// Function to get daily puzzle based on current date
+// Function to get daily puzzle based on current date (original algorithm)
 const getDailyPuzzle = () => {
   const today = new Date();
   const startOfYear = new Date(today.getFullYear(), 0, 1);
@@ -26,10 +26,16 @@ const getDailyPuzzle = () => {
   return puzzleConfigs[puzzleIndex];
 };
 
-// Function to get puzzle by ID
+// Function to get puzzle by exact ID (without rotation)
 const getPuzzleById = (id) => {
+  // Find the puzzle with the given ID
   const puzzle = puzzleConfigs.find(p => p.id === id);
-  return puzzle || getDailyPuzzle(); // Fallback to daily puzzle if ID not found
+  // If the puzzle ID is not found, fall back to the daily puzzle
+  if (!puzzle) {
+    return getDailyPuzzle();
+  }
+  
+  return puzzle;
 };
 
 const BODMASPuzzle = ({ puzzleId }) => {
@@ -385,10 +391,7 @@ const BODMASPuzzle = ({ puzzleId }) => {
       return;
     }
 
-    setResult(`🎉 Congratulations! Puzzle solved correctly!
-
-Daily Challenge - Boost your Brainpower!
-Return tomorrow for a new challenge!`);
+    setResult(`🎉 Congratulations! Puzzle solved correctly!\n\nDaily Challenge - Boost your Brainpower!\nReturn tomorrow for a new challenge!`);
     setResultColor('#28a745');
     setIsTimerRunning(false); // Stop the timer when puzzle is solved correctly
   };
